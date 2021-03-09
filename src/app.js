@@ -11,11 +11,11 @@ mongoose.connect('mongodb://localhost:27017/Sport', { useNewUrlParser: true, use
 
 //Schema for databse collections
 const listSchema = new mongoose.Schema({
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique : true},
     type: String,
     active: Boolean,
-    //  age : Double,
-    //  year : Double,
+    age : {type : Number, min: 15, max: 65 },
+    year : {type : Number},
     date: {
         type: Date,
         default: Date.now
@@ -61,22 +61,28 @@ const newDoc = async () => {
         const vollyballSport = new Sport({
             name: "vollyball",
             type: 'Ground',
-            active: true
+            active: true,
+            age : 20,
+            year : 2011
         })
 
         const basketballSport = new Sport({
             name: "basketball",
             type: 'Ground',
-            active: true
+            active: true,
+            age : 17,
+            year : 2015
         })
 
         const wweSport = new Sport({
             name: "wwe",
             type: 'Indoor',
-            active: true
+            active: true,
+            age : 14,
+            year : 2014
         })
 
-        const result = await Sport.insertMany([vollyballSport, basketballSport, wweSport]);
+        const result = await Sport.insertMany([wweSport]);
         console.log(result);
 
     } catch (err) {
@@ -97,4 +103,4 @@ const getDoc = async () => {
     console.log(result);
 }
 
-getDoc();
+// getDoc();
